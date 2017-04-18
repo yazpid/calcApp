@@ -20,15 +20,18 @@ export function RestangularConfigFactory (RestangularProvider) {
 import { AlertModule } from 'ngx-bootstrap';
 
 //angular material
-//import {BrowserAnimationsModule} from '@angular/platform-browser/a'
+//import {BrowserAnimationsModule} from '@angular/platform-browser/';
+//import {MdButtonModule, MdCheckboxModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TasksComponent
+    TasksComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
