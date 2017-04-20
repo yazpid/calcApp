@@ -27,6 +27,7 @@ router.post('/authenticate', function (req, res, next) {
                     userName : user.name
                 })
             }else {
+                res.status(403);
                 res.json({
                     error : "bad data"
                 })

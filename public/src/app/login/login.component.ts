@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
 
-            this.uiRouter.stateService.target('dashboard');
+            this.uiRouter.stateService.go('dashboard');
             // this.uiRouter.transitionService.onStart({to: 'login.**'}, function (trans) {
             //   var $state = trans.router.stateService;
             //   return $state.target('dashboard');
