@@ -48,13 +48,6 @@ router.get('/createUser', function(req, res) {
         res.json(nick);
     })
 
-
-    // nick.save(function(err) {
-    //     if (err) throw err;
-    //
-    //     console.log('User saved successfully');
-    //     res.json({ success: true });
-    // });
 });
 
 module.exports = router;

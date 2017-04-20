@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from './login.service';
-import {UIROUTER_DIRECTIVES} from 'ui-router-ng2';
 import {UIRouter} from 'ui-router-ng2';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 
-  providers: [LoginService]
+  providers: [LoginService,CookieService]
 })
 export class LoginComponent implements OnInit {
 
   user : any = {};
 
-  constructor(private loginService : LoginService, private uiRouter:UIRouter) { }
+  constructor(private loginService : LoginService, private uiRouter:UIRouter,private _cookieService:CookieService) { }
 
   ngOnInit() {}
 
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
       this.loginService.getAuthenticate(this.user.name, this.user.password)
         .subscribe(
           data => {
-
+            this._cookieService.putObject('user',data);
             this.uiRouter.stateService.go('dashboard');
             // this.uiRouter.transitionService.onStart({to: 'login.**'}, function (trans) {
             //   var $state = trans.router.stateService;

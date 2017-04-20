@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var jwt = require('jsonwebtoken');
 var mongoose    = require('mongoose');
+var apiRoutes = express.Router();
+
 
 var User = require('./models/user');
 
@@ -34,6 +36,44 @@ app.use(express.static(path.join(__dirname, 'client')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : false}));
+
+apiRoutes.use(function(req, res, next) {
+
+    // check header or url parameters or post parameters for token
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+    // decode token
+    if (token) {
+
+        // verifies secret and checks exp
+        jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+            if (err) {
+                return res.json({ success: false, message: 'Failed to authenticate token.' });
+            } else {
+                // if everything is good, save to request for use in other routes
+                req.decoded = decoded;
+                next();
+            }
+        });
+
+    } else {
+
+        // if there is no token
+        // return an error
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+
+    }
+});
+
+
+app.use('/api/users', apiRoutes);
+app.use('/api/tasks', apiRoutes);
+
+
+
 
 app.use('/', index);
 app.use('/api', tasks);

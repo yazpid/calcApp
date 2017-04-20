@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { CookieModule } from 'ngx-cookie';
+import { CookieService } from 'ngx-cookie';
 
 //ui-router
 import {UIRouterModule, UIView} from 'ui-router-ng2';
@@ -11,8 +13,11 @@ import {routerConfig} from './app.router.config';
 //restangular
 
 import { RestangularModule, Restangular } from 'ng2-restangular';
-export function RestangularConfigFactory (RestangularProvider) {
+export function RestangularConfigFactory (RestangularProvider, CookieService) {
   RestangularProvider.setBaseUrl('http://localhost:3000/api/');
+  //CookieService.putObject('user','test');
+  //console.log(CookieService.getObject('user'));
+  console.log(CookieService);
   //RestangularProvider.setDefaultHeaders({'x-user-token-api':data.token});
 
 }
@@ -38,6 +43,7 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    CookieModule.forRoot(),
     UIRouterModule.forRoot({
       states : appStates,
       useHash : true,
@@ -47,7 +53,7 @@ import { LoginComponent } from './login/login.component';
     RestangularModule.forRoot(RestangularConfigFactory),
     AlertModule.forRoot()
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [UIView]
 })
 export class AppModule { }

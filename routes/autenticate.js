@@ -22,6 +22,7 @@ router.post('/authenticate', function (req, res, next) {
                 var token = jwt.sign(user, app.get('superSecret'), {
                     expiresIn: 60 * 60  // expires in 24 hours
                 });
+                res.status(200);
                 res.json({
                     token : token,
                     userName : user.name
