@@ -13,7 +13,8 @@ import {routerConfig} from './app.router.config';
 import { RestangularModule, Restangular } from 'ng2-restangular';
 export function RestangularConfigFactory (RestangularProvider) {
   RestangularProvider.setBaseUrl('http://localhost:3000/api/');
-  //RestangularProvider.setDefaultHeaders({'Authorization': 'Bearer UDXPx-Xko0w4BRKajozCVy20X11MRZs1'});
+  //RestangularProvider.setDefaultHeaders({'x-user-token-api':data.token});
+
 }
 
 //bootstrap
