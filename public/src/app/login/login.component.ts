@@ -16,18 +16,25 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService : LoginService, private uiRouter:UIRouter,private _cookieService:CookieService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loginService.getAuth()
+      .subscribe(
+        data => {
+          this.uiRouter.stateService.go('dashboard');
+        },
+        error => {
+          console.log(error);
+        }
+      )
+  }
 
   login(){
       this.loginService.getAuthenticate(this.user.name, this.user.password)
         .subscribe(
           data => {
-            this._cookieService.putObject('user',data);
+            localStorage.removeItem('loggedUser');
+            localStorage.setItem('loggedUser', data.token);
             this.uiRouter.stateService.go('dashboard');
-            // this.uiRouter.transitionService.onStart({to: 'login.**'}, function (trans) {
-            //   var $state = trans.router.stateService;
-            //   return $state.target('dashboard');
-            // })
 
             console.log(data);
 

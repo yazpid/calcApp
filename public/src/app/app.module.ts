@@ -1,9 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { CookieModule } from 'ngx-cookie';
-import { CookieService } from 'ngx-cookie';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {CookieModule} from 'ngx-cookie';
+import {CookieService} from 'ngx-cookie';
+import { MaterialModule } from '@angular/material';
 
 //ui-router
 import {UIRouterModule, UIView} from 'ui-router-ng2';
@@ -12,26 +13,39 @@ import {routerConfig} from './app.router.config';
 
 //restangular
 
-import { RestangularModule, Restangular } from 'ng2-restangular';
-export function RestangularConfigFactory (RestangularProvider, CookieService) {
+import {RestangularModule, Restangular} from 'ng2-restangular';
+export function RestangularConfigFactory(RestangularProvider) {
   RestangularProvider.setBaseUrl('http://localhost:3000/api/');
-  //CookieService.putObject('user','test');
-  //console.log(CookieService.getObject('user'));
-  console.log(CookieService);
-  //RestangularProvider.setDefaultHeaders({'x-user-token-api':data.token});
+  RestangularProvider.setDefaultHeaders
+  ({
+    "Content-Type": "application/json",
+  });
+
+  RestangularProvider.addFullRequestInterceptor((element, operation, path, url, headers, params) => {
+    if ("loggedUser" in localStorage) {
+     // let loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+      console.log('token in loggedUser inside localstorage');
+      return {
+        headers: Object.assign({}, headers, {'x-access-token': localStorage.getItem("loggedUser")})
+      };
+    } else {
+      console.log('token not found in local storage - Interceptor');
+    }
+  });
 
 }
 
+
 //bootstrap
-import { AlertModule } from 'ngx-bootstrap';
+import {AlertModule} from 'ngx-bootstrap';
 
 //angular material
 //import {BrowserAnimationsModule} from '@angular/platform-browser/';
 //import {MdButtonModule, MdCheckboxModule} from '@angular/material';
 
-import { AppComponent } from './app.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { LoginComponent } from './login/login.component';
+import {AppComponent} from './app.component';
+import {TasksComponent} from './tasks/tasks.component';
+import {LoginComponent} from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -45,10 +59,10 @@ import { LoginComponent } from './login/login.component';
     HttpModule,
     CookieModule.forRoot(),
     UIRouterModule.forRoot({
-      states : appStates,
-      useHash : true,
-      otherwise : { state: 'dashboard'},
-      config : routerConfig
+      states: appStates,
+      useHash: true,
+      otherwise: {state: 'dashboard'},
+      config: routerConfig
     }),
     RestangularModule.forRoot(RestangularConfigFactory),
     AlertModule.forRoot()
@@ -56,4 +70,5 @@ import { LoginComponent } from './login/login.component';
   providers: [CookieService],
   bootstrap: [UIView]
 })
-export class AppModule { }
+export class AppModule {
+}

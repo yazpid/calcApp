@@ -13,6 +13,7 @@ var index = require('./routes/index');
 var tasks = require('./routes/tasks');
 var users = require('./routes/user');
 var authenticate = require('./routes/autenticate');
+var auth = require('./routes/authCheck');
 
 var port = process.env.PORT || 3000;
 
@@ -79,6 +80,7 @@ app.use('/', index);
 app.use('/api', tasks);
 app.use('/api', users);
 app.use('/api',authenticate);
+app.use('/api', auth);
 
 app.listen(port, function () {
     console.log("server start on "+port);

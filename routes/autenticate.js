@@ -19,9 +19,10 @@ router.post('/authenticate', function (req, res, next) {
     db.users.findOne({name: name, password: password}, function (err, user) {
 
             if(user){
-                var token = jwt.sign(user, app.get('superSecret'), {
-                    expiresIn: 60 * 60  // expires in 24 hours
-                });
+                var options = {
+                    'expiresIn': '25s'
+                };
+                var token = jwt.sign(user, app.get('superSecret'), options);
                 res.status(200);
                 res.json({
                     token : token,

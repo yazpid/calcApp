@@ -16,4 +16,10 @@ export class LoginService {
       .all('authenticate')
       .post({name: name, password: password});
   }
+
+  getAuth(){
+    return this.restangular
+      .all('auth')
+      .post();
+  }
 }
