@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-      this.loginService.getAuthenticate(this.user.name, this.user.password)
+      this.loginService.getAuthenticate(this.user.login, this.user.password)
         .subscribe(
           data => {
             localStorage.removeItem('loggedUser');
