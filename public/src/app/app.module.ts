@@ -4,17 +4,29 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {CookieModule} from 'ngx-cookie';
 import {CookieService} from 'ngx-cookie';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from '@angular/material';
+import {LoginService} from './login/login.service';
 
 //ui-router
 import {UIRouterModule, UIView} from 'ui-router-ng2';
 import {appStates} from './app.states';
 import {routerConfig} from './app.router.config';
 
+
+
+import {AppComponent} from './app.component';
+import {TasksComponent} from './tasks/tasks.component';
+import {LoginComponent} from './login/login.component';
+import  {RegisterComponent} from './register/register.component';
+
+
 //restangular
 
 import {RestangularModule, Restangular} from 'ng2-restangular';
 export function RestangularConfigFactory(RestangularProvider) {
+
+  console.log("xsxsxs")
   RestangularProvider.setBaseUrl('http://localhost:3000/api/');
   RestangularProvider.setDefaultHeaders
   ({
@@ -29,7 +41,10 @@ export function RestangularConfigFactory(RestangularProvider) {
         headers: Object.assign({}, headers, {'x-access-token': localStorage.getItem("loggedUser")})
       };
     } else {
-      console.log('token not found in local storage - Interceptor');
+     return{
+       headers: Object.assign({}, headers, {'x-access-token': ''})
+     };
+
     }
   });
 
@@ -43,20 +58,20 @@ import {AlertModule} from 'ngx-bootstrap';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/';
 //import {MdButtonModule, MdCheckboxModule} from '@angular/material';
 
-import {AppComponent} from './app.component';
-import {TasksComponent} from './tasks/tasks.component';
-import {LoginComponent} from './login/login.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TasksComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    NgbModule.forRoot(),
     CookieModule.forRoot(),
     UIRouterModule.forRoot({
       states: appStates,
@@ -67,7 +82,7 @@ import {LoginComponent} from './login/login.component';
     RestangularModule.forRoot(RestangularConfigFactory),
     AlertModule.forRoot()
   ],
-  providers: [CookieService],
+  providers: [CookieService,LoginService],
   bootstrap: [UIView]
 })
 export class AppModule {

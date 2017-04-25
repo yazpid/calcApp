@@ -20,7 +20,7 @@ router.post('/authenticate', function (req, res, next) {
 
             if(user){
                 var options = {
-                    'expiresIn': '25s'
+                    'expiresIn': '2h'
                 };
                 var token = jwt.sign(user, app.get('superSecret'), options);
                 res.status(200);

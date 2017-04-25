@@ -35,6 +35,14 @@ router.post('/auth', function (req, res, next) {
         });
 
     }
+    else
+    {
+        res.status(403);
+        res.json({
+                success : false,
+                message : 'Failed to authenticate token.'
+        });
+    }
 });
 
 module.exports = router;

@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Restangular} from "ng2-restangular";
-import { Http, Headers, Response } from '@angular/http';
-import {Observable} from 'rxjs/observable'
+import {UIRouter} from 'ui-router-ng2';
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class LoginService {
 
-  constructor(private restangular: Restangular,private http: Http) {
+
+  constructor(private restangular: Restangular, private uirouter : UIRouter) {
     console.log("Service initialized")
   }
 
@@ -17,9 +17,18 @@ export class LoginService {
       .post({name: name, password: password});
   }
 
-  getAuth(){
+  checkAuth(){
     return this.restangular
       .all('auth')
       .post();
   }
+
+  logout(){
+      localStorage.removeItem('loggedUser');
+
+      return this.uirouter.stateService.go('login');
+  }
+
+
+
 }

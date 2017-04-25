@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(private loginService : LoginService, private uiRouter:UIRouter,private _cookieService:CookieService) { }
 
   ngOnInit() {
-    this.loginService.getAuth()
+    console.log('oninit');
+    this.loginService.checkAuth()
       .subscribe(
         data => {
           this.uiRouter.stateService.go('dashboard');

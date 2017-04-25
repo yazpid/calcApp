@@ -1,6 +1,7 @@
 import {AppComponent} from './app.component';
 import {TasksComponent} from './tasks/tasks.component';
 import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 
 export const loginState = {
@@ -8,6 +9,12 @@ export const loginState = {
   url : '/login',
   component : LoginComponent
 
+};
+
+export const registerState = {
+  name: 'register',
+  url: '/register',
+  component: RegisterComponent
 };
 
 export const dashboardState = {
@@ -26,8 +33,10 @@ export const taskState = {
 
 
 
+
 export const appStates = [
   loginState,
   dashboardState,
-  taskState
+  taskState,
+  registerState
 ];
