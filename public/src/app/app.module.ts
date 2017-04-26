@@ -26,7 +26,6 @@ import  {RegisterComponent} from './register/register.component';
 import {RestangularModule, Restangular} from 'ng2-restangular';
 export function RestangularConfigFactory(RestangularProvider) {
 
-  console.log("xsxsxs")
   RestangularProvider.setBaseUrl('http://localhost:3000/api/');
   RestangularProvider.setDefaultHeaders
   ({
