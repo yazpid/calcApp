@@ -10,19 +10,19 @@ var db = mongojs(url, collection);
 
 // get all users
 router.get('/users', function (req, res, next) {
-   db.users.find(function (err, users) {
-       if(err){
-           console.log(err)
-       }
-       res.json(users);
-   })
+    db.users.find(function (err, users) {
+        if (err) {
+            console.log(err)
+        }
+        res.json(users);
+    })
 });
 
 //get single user
 
 router.get('/user/:id', function (req, res, next) {
-    db.users.findOne({_id : mongojs.ObjectId(req.params.id)}, function (err, user) {
-        if (err){
+    db.users.findOne({_id: mongojs.ObjectId(req.params.id)}, function (err, user) {
+        if (err) {
             res.send(err)
         }
         res.json(user);
@@ -30,23 +30,45 @@ router.get('/user/:id', function (req, res, next) {
     })
 });
 
-router.get('/createUser', function(req, res) {
+router.post('/user', function (req, res) {
 
     // create a sample user
-    var nick = new User({
-        name: 'Nick',
-        password: 'password',
-        admin: true
+    // var nick = new User({
+    //     name: 'Nick',
+    //     password: 'password',
+    //     admin: true
+    // });
+
+    var user = new User({
+        firstName: req.body.firstName,
+        login: req.body.login,
+        email: req.body.email,
+        password: req.body.password,
+        isAdmin: false
     });
 
     // save the sample user
 
-    db.users.save(nick, function (err, nick) {
-        if(err){
-            res.send(err)
-        }
-        res.json(nick);
-    })
+    if (!user.firstName || !user.login || !user.password || !user.email){
+        res.status(400);
+        res.json({
+            error : "Bad data"
+        })
+    }else {
+        db.users.save(user, function (err, user) {
+            if (err) {
+                res.send(err)
+            }
+            res.status(200);
+            res.json({
+                firstName: user.firstName,
+                login: user.login,
+                email: user.email
+            });
+        })
+    }
+
+
 
 });
 

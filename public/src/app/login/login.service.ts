@@ -11,10 +11,10 @@ export class LoginService {
     console.log("Service initialized")
   }
 
-  getAuthenticate(name : string, password: string) {
+  getAuthenticate(login : string, password: string) {
      return this.restangular
       .all('authenticate')
-      .post({name: name, password: password});
+      .post({login: login, password: password});
   }
 
   checkAuth(){

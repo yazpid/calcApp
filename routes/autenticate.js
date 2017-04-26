@@ -14,9 +14,9 @@ var db = mongojs(url, collection);
 
 
 router.post('/authenticate', function (req, res, next) {
-    var name = req.body.name;
+    var login = req.body.login;
     var password = req.body.password;
-    db.users.findOne({name: name, password: password}, function (err, user) {
+    db.users.findOne({login: login, password: password}, function (err, user) {
 
             if(user){
                 var options = {
@@ -26,7 +26,7 @@ router.post('/authenticate', function (req, res, next) {
                 res.status(200);
                 res.json({
                     token : token,
-                    userName : user.name
+                    login : user.login
                 })
             }else {
                 res.status(403);
