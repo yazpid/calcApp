@@ -26,7 +26,8 @@ router.post('/authenticate', function (req, res, next) {
                 res.status(200);
                 res.json({
                     token : token,
-                    login : user.login
+                    login : user.login,
+                    id: user._id
                 })
             }else {
                 res.status(403);

@@ -63,7 +63,7 @@ router.post('/user', function (req, res) {
             res.json({
                 firstName: user.firstName,
                 login: user.login,
-                email: user.email
+                email: user.email,
             });
         })
     }

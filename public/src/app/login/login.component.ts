@@ -33,8 +33,13 @@ export class LoginComponent implements OnInit {
       this.loginService.getAuthenticate(this.user.login, this.user.password)
         .subscribe(
           data => {
+            let user = {
+              token: data.token,
+              login: data.login,
+              id: data.id
+            }
             localStorage.removeItem('loggedUser');
-            localStorage.setItem('loggedUser', data.token);
+            localStorage.setItem('loggedUser', JSON.stringify(user));
             this.uiRouter.stateService.go('dashboard');
 
             console.log(data);
