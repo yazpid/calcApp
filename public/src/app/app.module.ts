@@ -8,11 +8,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from '@angular/material';
 
 
+
 //app files
 import {SharedModule} from './shared/shared.module';
 import {DashboardModule} from './dashboard/dashboard.module'
 
 import {LoginService} from './login/login.service';
+import {UserService} from './shared/services/user.service';
 
 import {AppComponent} from './app.component';
 import {TasksComponent} from './tasks/tasks.component';
@@ -90,7 +92,7 @@ import {AlertModule} from 'ngx-bootstrap';
     RestangularModule.forRoot(RestangularConfigFactory),
     AlertModule.forRoot()
   ],
-  providers: [CookieService,LoginService],
+  providers: [CookieService,LoginService,UserService],
   bootstrap: [UIView]
 })
 export class AppModule {

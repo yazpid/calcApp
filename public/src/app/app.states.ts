@@ -45,7 +45,7 @@ export const settingsState = {
   resolve: [
     {
       token: 'user',
-      deps: [Transition,UserService],
+      deps: [UserService,Transition],
       resolveFn: getUser
     }
   ]
@@ -63,7 +63,8 @@ export const appStates = [
 ];
 
 
-export function getUser(inject: Injector, trans: Transition){
-  const userSvc = inject.get(UserService);
-  return userSvc.getUser(trans.params().id);
+export function getUser(userService: UserService, transition: Transition){
+
+  return userService.getUser(transition.params().id);
+
 }

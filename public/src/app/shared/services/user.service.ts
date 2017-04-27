@@ -6,9 +6,9 @@ export class UserService {
 
   constructor(private restangular: Restangular) { }
 
-  getUser(id){
+  getUser(id: string){
     return this.restangular
-      .one('user/'+id)
-      .get();
+      .all('user')
+      .get(id);
   }
 }

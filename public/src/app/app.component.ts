@@ -17,9 +17,9 @@ export class AppComponent implements OnInit{
   constructor(private modalService: NgbModal, private injector : Injector){}
 
   ngOnInit(){
-    userId => {
-      return JSON.parse(localStorage.getItem('loggedUser')).id;
-    }
+
+      this.userId =  JSON.parse(localStorage.getItem('loggedUser')).id;
+
   }
 
   open(content) {

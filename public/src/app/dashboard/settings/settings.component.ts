@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 
 @Component({
@@ -8,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-
+  constructor(@Inject("user") public user) {
   }
 
+  ngOnInit() {
+    this.user
+      .subscribe(
+        resp => {
+          this.user = resp;
+        },
+        error => {
+         throw error;
+        }
+      )
+  }
 }
